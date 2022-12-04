@@ -8,14 +8,14 @@ declare interface RouteInfo {
     class: string;
 }
 export const ROUTES: RouteInfo[] = [
-    { path: '/inicio', title: 'Inicio',  icon: 'ni-tv-2 text-secondary', class: '' },
-    { path: '/mi-organizacion-social', title: 'Mi organización social',  icon:'ni-planet text-secondary', class: '' },
-    { path: '/generar-solicitud', title: 'Generar solicitud',  icon:'ni-pin-3 text-secondary', class: '' },
-    { path: '/solicitudes-rechazadas', title: 'Solicitudes rechazadas',  icon:'ni-bullet-list-67 text-secondary', class: '' },
-    { path: '/requisitos', title: 'Ver requisitos',  icon:'ni-bullet-list-67 text-secondary', class: '' },
-    { path: '/organizaciones-sociales', title: 'Ver organizaciones sociales',  icon:'ni-bullet-list-67 text-secondary', class: '' },
-    { path: '/login', title: 'Login',  icon:'ni-key-25 text-secondary', class: '' },
-    { path: '/register', title: 'Register',  icon:'ni-circle-08 text-secondary', class: '' }
+    { path: 'inicio', title: 'inicio',  icon: 'ni-tv-2 text-secondary', class: '*ngIf="isLogged"' },
+    { path: 'mi-organizacion-social', title: 'Mi organización social',  icon:'ni-planet text-secondary', class: '*ngIf="isLogged"' },
+    { path: 'generar-solicitud', title: 'Generar solicitud',  icon:'ni-pin-3 text-secondary', class: '*ngIf="isLogged"' },
+    { path: 'solicitudes-rechazadas', title: 'Solicitudes rechazadas',  icon:'ni-bullet-list-67 text-secondary', class: '*ngIf="isLogged"' },
+    { path: 'requisitos', title: 'Ver requisitos',  icon:'ni-bullet-list-67 text-secondary', class: '*ngIf="isLogged"' },
+    { path: 'organizaciones-sociales', title: 'Ver organizaciones sociales',  icon:'ni-bullet-list-67 text-secondary', class: '*ngIf="isLogged"' },
+    { path: 'login', title: 'Login',  icon:'ni-key-25 text-secondary', class: '*ngIf="isLogged"' },
+    { path: 'register', title: 'Register',  icon:'ni-circle-08 text-secondary', class: '*ngIf="isLogged"' }
 ];
 
 @Component({
@@ -31,6 +31,7 @@ export class SidebarComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
+    console.log(ROUTES)
     this.menuItems = ROUTES.filter(menuItem => menuItem);
     this.router.events.subscribe((event) => {
       this.isCollapsed = true;

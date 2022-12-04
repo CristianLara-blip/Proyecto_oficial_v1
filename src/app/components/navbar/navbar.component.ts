@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Router } from '@angular/router';
+import { TokenService } from 'src/app/service/token.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,14 +10,29 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+  nombreUsuario = '';
+  
+  isLogged = false;
   public focus;
   public listTitles: any[];
   public location: Location;
-  constructor(location: Location,  private element: ElementRef, private router: Router) {
+  constructor(
+    private tokenService: TokenService,
+    location: Location,  private element: ElementRef, private router: Router) {
     this.location = location;
   }
 
   ngOnInit() {
+    
+    if (this.tokenService.getToken()) {
+      this.isLogged = true;
+      this.nombreUsuario = this.tokenService.getUserName();
+      
+    } else {
+      this.isLogged = false;
+      this.nombreUsuario = '';
+      
+    };
     this.listTitles = ROUTES.filter(listTitle => listTitle);
   }
   getTitle(){
@@ -32,5 +48,8 @@ export class NavbarComponent implements OnInit {
     }
     return 'Dashboard';
   }
-
+  onLogOut(): void {
+    this.tokenService.logOut();
+    window.location.reload();
+  }
 }
